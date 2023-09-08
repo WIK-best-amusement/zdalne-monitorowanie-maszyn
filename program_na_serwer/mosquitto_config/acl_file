@@ -1,0 +1,10 @@
+#test client for testing
+user testclient
+topic readwrite #
+
+#server client!
+#user ruby_mqtt_con_client
+#topic readwrite #
+
+#allow devices to publish/subscribe to their own topics
+pattern readwrite %u/#

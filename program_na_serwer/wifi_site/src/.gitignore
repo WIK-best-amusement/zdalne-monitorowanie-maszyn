@@ -1,0 +1,17 @@
+/node_modules
+/public/storage
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+.env
+/vendor/
+vendor
+/vendor/
+/storage/framework/cache/**
+/storage/framework/sessions/**
+/storage/framework/views/**
+!/storage/framework/cache/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views/.gitkeep
+

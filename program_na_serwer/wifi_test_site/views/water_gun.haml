@@ -1,0 +1,74 @@
+:css
+  table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+
+  th, td {
+      text-align: left;
+      padding: 8px;
+  }
+  
+  th.error { color: #ff0000 }
+  th.warning {color: #FFCC00 }
+  th.noVersion {color:#B000B0}
+
+  tr:nth-child(even){background-color: #e4e4e4}
+
+%h1= "Watergun list"
+wersja
+%br
+czas działania/ilość błędów/błędy na 10s
+%table
+  %tr
+    %th serial
+    %th name
+    %th last_seen
+    %th APP
+    %th DI
+    %th FP master
+    %th FP slave
+    %th DRT master
+    %th DRT slave
+    %th TKB
+    %th UD
+    %th blokada
+    %th water lvl
+    %th mod_fw
+    %th mod_rssi
+    %th mod_ssid
+    %th mod_serial
+  - @device_list.each do |dev|
+    %tr
+      %th
+        %a{:href => "/devices/#{dev.id}", :role => "button"}
+          =dev.serial_number
+      %th= dev.name
+      %th= dev.last_seen
+      %th= "#{dev.get_opt(348)&.value}"
+      %th= "#{dev.get_opt(321)&.value}/#{dev.get_opt(337)&.value}"
+      - @version_id.each_with_index do |val, i|
+        - ver = dev.get_opt(@version_id[i])&.value
+        - uptime = dev.get_opt(@uptime_id[i])&.value
+        - err = dev.get_opt(@error_id[i])&.value
+        - errPerTime = (uptime.to_f/err.to_f)
+        %th{ class: (ver == "xxxxxx" ? "noVersion" : (errPerTime < 30 ? "error" : (errPerTime < 60 ? "warning" : nil)))}
+          #{ver}
+          %br
+          #{uptime.to_s+'/'+err.to_s+'='+(errPerTime.infinite? ? 0 : errPerTime.truncate).to_s}
+      %th= "#{dev.get_opt(346)&.value}/#{dev.get_opt(347)&.value}"
+      - waterLevel = dev.get_opt(344)&.value
+      - waterMax = dev.get_opt(349)&.value
+      - waterMin = dev.get_opt(350)&.value
+      - waterPercent = (waterMin == nil ? "null" : (((waterLevel.to_f-waterMin.to_f)/(waterMax.to_f-waterMin.to_f))*100).truncate)
+      %th{ class: waterPercent.to_i < 5 ? "error" : (waterPercent.to_i < 25 ? "warning" : nil)}
+        "#{waterLevel.to_s+'/'+waterPercent.to_s+'%'}"
+        %br
+        "#{waterMin}:#{waterMax}"
+      %th= "#{dev.modem.firmware_version}"
+      %th= "#{dev.modem.rssi}"
+      %th= "#{dev.modem.net_name}"
+      %th= "#{dev.modem.serial_number}"
+      %th
+        %a{:href => "http://online.wik.pl:8888/sources/1/dashboards/10?tempVars%5Bdev_id%5D=%27#{dev.id}%27&lower=now%28%29%20-%2015m", :role => "button"}
+          graphs

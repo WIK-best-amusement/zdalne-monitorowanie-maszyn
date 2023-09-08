@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+source "https://rubygems.org"
+gem 'faye-websocket'
+gem 'mysql2'
+gem 'activerecord'
+gem 'test-unit'
+gem 'mocha'
+gem 'paho-mqtt'
+gem 'influxdb'
+gem 'safe_attributes'

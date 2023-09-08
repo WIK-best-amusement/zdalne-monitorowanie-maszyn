@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+source "https://rubygems.org"
+gem 'activerecord'
+gem 'sinatra'
+gem 'mysql2'
+gem 'redis'
+gem 'json'
+gem 'hamlit'
+gem 'haml'
+gem 'pry'
+gem 'pry-remote'

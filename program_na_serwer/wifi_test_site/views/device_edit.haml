@@ -1,0 +1,25 @@
+%h1= "Editing device with serial : #{@device.serial_number} , name:#{@device.name}"
+%form{:action => "#{@device.id}", :method => "post"}
+  .form-group
+    %label{:for => "device_name"} lamp_name:
+    %input#lamp_name.form-control{:type => "text", name: 'device_name', value: @device.name}
+  -#.form-group
+  -#  %label{:for => "led_count"} led_count:
+  -#  %input#led_count.form-control{:type => "text", name: 'led_count', value: @node.led_count}
+  -#.form-group
+  -#  %label{:for => "lamp_type"} lamp_type:
+  -#  %input#lamp_type.form-control{:type => "text", name: 'lamp_type', value: @node.lamp_type}
+  -#.form-group
+  -#  %label{:for => "description"} description:
+  -#  %input#description.form-control{:type => "text", name: 'description', value: @node.description}
+  -#.form-group
+  -#  %label{:for => "led_group_id"} led_group_id:
+  -#  %input#led_group_id.form-control{:type => "text", name: 'led_group_id', value: @node.led_group_id}
+  -#.checkbox
+  -#  %label
+  -#    %input{:type => "checkbox", name: 'manual_control', :value => @node.manual_control}>
+  -#    manual control only
+  %button.btn.btn-default{:type => "submit"} Submit
+
+
+

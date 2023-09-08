@@ -1,0 +1,117 @@
+version: '3.5'
+
+services:
+  wifi_site:
+    build: wifi_site/.
+    container_name: wifi_site
+    depends_on:
+    - mysql
+    - wifi_site_to_ruby_connector
+    networks:
+    - default
+    environment:
+    - APP_URL=https://online.wik.pl
+    - DB_HOST=mysql
+    - DB_PORT=3306
+    - DB_DATABASE=wifi_comm_dev
+    - DB_USERNAME=dbuser
+    - DB_PASSWORD=dbpass
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    ports:
+    - "80:80"
+    restart: always
+  mysql:
+    image: mysql:5.7.22
+    container_name: wifi_mysql
+    expose:
+    - "3306"
+    environment:
+    - MYSQL_DATABASE=wifi_comm_dev
+    - MYSQL_USER=dbuser
+    - MYSQL_PASSWORD=dbpass
+    - MYSQL_ROOT_PASSWORD=dbrootpass
+    volumes:
+    - ./persistance/mysql:/var/lib/mysql
+    restart: always
+  mqtt:
+    image: eclipse-mosquitto:1.5
+    container_name: wifi_mqtt
+    ports:
+    - "8883:8883"
+    volumes:
+    - ./mosquitto_config:/mosquitto/config:ro
+    - ./persistance/mosquitto/data:/mosquitto/data
+    - ./persistance/mosquitto/log:/mosquitto/log
+    restart: always
+  ruby_mqtt_client:
+    build: ruby_mqtt_client/.
+    container_name: wifi_ruby_mqtt_client
+    depends_on:
+    - mysql
+    - mqtt
+    - wifi_site_to_ruby_connector
+    - influxdb
+    environment:
+    - DB_DATABASE=wifi_comm_dev
+    - DB_USERNAME=dbuser
+    - DB_PASSWORD=dbpass
+    volumes:
+    - ./ruby_mqtt_client_keys:/usr/src/app/keys:ro
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    restart: always
+  wifi_site_to_ruby_connector:
+    build: wifi_site_to_ruby_connector/.
+    container_name: wifi_site_to_ruby_connector
+    networks:
+    - default
+    restart: always
+  influxdb:
+    image: influxdb:1.7
+    expose:
+    - "8086"
+    volumes:
+    - ./persistance/influxdb:/var/lib/influxdb
+    restart: always
+  influx_chronograf:
+    image: chronograf:1.7
+    depends_on:
+    - influxdb
+    networks:
+    - default
+    expose:
+    - "8888"
+    command:
+    - --basepath=/chrono
+    volumes:
+    - ./persistance/influx_chronograf:/var/lib/chronograf
+    restart: always
+#  python_ml:
+#    build: python_ml/.
+#    container_name: wifi_python_ml
+#    depends_on:
+#    - mysql
+#    environment:
+#    - DB_DATABASE=wifi_comm_dev
+#    - DB_USERNAME=dbuser
+#    - DB_PASSWORD=dbpass
+#    restart: always
+  wifi_test_site:
+    build: wifi_test_site/.
+    container_name: wifi_test_site
+    depends_on:
+    - mysql
+    networks:
+    - default
+    environment:
+    - DB_DATABASE=wifi_comm_dev
+    - DB_USERNAME=dbuser
+    - DB_PASSWORD=dbpass
+    expose:
+    - "4567"
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    restart: always
