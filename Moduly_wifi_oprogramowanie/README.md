@@ -1,3 +1,5 @@
+![Unia](./unia.png)
+
 Projekt najlepiej jest otworzyć w darmowym środowisku programistycznym 'Visual Studio Code'', z zainstalowaną wtyczką 'Platformio'
 
 Pobrane zostaną wtedy automatycznie kompilator oraz inne komponent wymagane do skompilowania projektu na moduły WiFi które oparte są o mikrokontroler ESP8266

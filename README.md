@@ -1,3 +1,5 @@
+![Unia](./unia.png)
+
 Projekt służy do zdalnego monitorowania pracy różnych urządzeń rozrywkowych, takich jak airhockey'e, maszyny do gry w koszykówkę czy też inne automaty do gier. Informację o ilości rozegranych gier, parametrach pracy urządzenia, oraz innych informacjach są przesyłane do serwera, gdzie są przechowywane i wyświetlane w formie wykresów i tabel.
 Dodatkowo serwer pozwala na zdalne sterowanie urządzeniami, np. zmianę ilości punktów potrzebnych do wygrania gry, czy też zmianę ilości kredytów potrzebnych do rozpoczęcia gry. Dodatkowo na podstawie przesyłanych przez urządzenie parametrów pracy, serwer jest w stanie wykryć awarie urządzenia i wyświetlać ostrzeżenia o nich właścicielowi urządzenia.
 Projekt zawiera wszystkie komponenty potrzebne do uruchomienia systemu, w tym:

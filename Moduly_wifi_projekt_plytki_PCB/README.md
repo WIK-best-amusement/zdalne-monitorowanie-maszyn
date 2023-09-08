@@ -1,3 +1,5 @@
+![Unia](./unia.png)
+
 Wszystkie pliki projektowe dotyczące płytki PCB z modułem WiFi, w katalogach znajdują się opowiednio:
 
 BOM - lista elementów elektrycznych znajdujących się na płytce

@@ -1,3 +1,5 @@
+![Unia](./unia.png)
+
 Wszystkie komponenty projektu zostały przygotowane aby uruchomić je z pomocą narzędzia 'Docker' i Docker compose.
 Dzięki temu uruchomienie własnej testowej instancji systemu jest bardzo proste.
 Pierwszym krokiem w celu uruchomienia systemu jest zainstalowanie narzędzia Docker oraz Docker compose.
